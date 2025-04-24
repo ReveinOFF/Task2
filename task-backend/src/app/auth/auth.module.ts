@@ -4,9 +4,12 @@ import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'src/core/entities/user.schema';
+import { PassportModule } from '@nestjs/passport';
+import { GoogleStrategy } from './google.strategy';
 
 @Module({
   imports: [
+    PassportModule,
     JwtModule.registerAsync({
       useFactory: async () => {
         return {
@@ -17,7 +20,7 @@ import { User, UserSchema } from 'src/core/entities/user.schema';
     }),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
   ],
-  providers: [AuthService],
+  providers: [AuthService, GoogleStrategy],
   controllers: [AuthController],
   exports: [JwtModule],
 })

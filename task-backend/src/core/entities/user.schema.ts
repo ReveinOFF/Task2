@@ -14,8 +14,11 @@ export class User extends BaseEntity {
   })
   email: string;
 
-  @Prop({ required: true })
+  @Prop()
   password: string;
+
+  @Prop({ default: 'local' })
+  provider: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

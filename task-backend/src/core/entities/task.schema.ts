@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 import { BaseEntity } from './base.schema';
 import { Importance } from '../enums';
 
@@ -23,6 +23,9 @@ export class Task extends BaseEntity {
 
   @Prop({ type: String, enum: Importance, default: Importance.ORDINARY })
   importance: string;
+
+  @Prop({ type: Types.UUID, ref: 'User', required: true })
+  user: Types.UUID;
 }
 
 export const TaskSchema = SchemaFactory.createForClass(Task);
