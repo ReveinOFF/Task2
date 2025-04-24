@@ -13,10 +13,10 @@ export class Task extends BaseEntity {
     trim: true,
     lowercase: true,
   })
-  name: string;
+  title: string;
 
-  @Prop({ type: Date, required: true })
-  date: Date;
+  @Prop({ required: true })
+  date: string;
 
   @Prop({ required: true })
   description: string;

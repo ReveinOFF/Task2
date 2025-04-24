@@ -6,6 +6,7 @@ import {
   HttpStatus,
   Post,
   Req,
+  Res,
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
@@ -30,11 +31,14 @@ export class AuthController {
 
   @Get('google')
   @UseGuards(GoogleOauthGuard)
+  @HttpCode(302)
   async auth() {}
 
   @Get('google/callback')
   @UseGuards(GoogleOauthGuard)
-  async googleAuthCallback(@Req() req) {
-    return await this.authService.googleLogin(req.user);
+  @HttpCode(302)
+  async googleAuthCallback(@Req() req, @Res() res) {
+    const token = await this.authService.googleLogin(req.user);
+    res.redirect(`${process.env.SITE_URL}/auth/google?at=${token}`);
   }
 }
